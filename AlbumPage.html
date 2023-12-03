@@ -1,0 +1,166 @@
+  <!DOCTYPE html>
+  <html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css' rel='stylesheet' />
+    <title>Fotos do album!</title>
+  </head>
+
+  <body class="px-5">
+    <header class="d-flex justify-content-between py-4 w-100">
+      <a href="index.html"><img src="/assets/logo.png" role="button"></a>
+      <nav class="nav-bar">
+        <ul class="d-flex list-unstyled fs-3 gap-0 column-gap-4 m-0">
+          <li><a role="button" href="index.html">Albuns de fotos</a></li>
+          <li><a role="button" href="https://leomendesrch-portfolio.vercel.app/">Sobre nós</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="pb-3 h-25">
+      <h4 class="album-title border-bottom border-3 pb-2"></h4>
+    </div>
+
+
+    <div class="album-content">
+      <img class="album-image" src="" alt="capa-album">
+      <div class="album-info">
+        <h5>Descrição</h5>
+        <p class="album-description"></p>
+        <div class="localization-and-data">
+          <div class="Localização">
+            <h5>Localização</h5>
+            <p class="album-localization"></p>
+          </div>
+
+          <div class="data">
+            <h5>Data de Registro</h5>
+            <p class="album-data"></p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="pb-3 h-25">
+      <h4 class="border-bottom border-3 pb-2">Itens (Fotos)</h4>
+    </div>
+    <div class="album-container">
+      <div class="grid-container-album">
+        <div class="grid-item-album" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          <img src="" id="image-1" alt="imagem-album" class="item-image-album">
+        </div>
+        <div class="grid-item-album" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          <img src="" id="image-2" alt="imagem-album" class="item-image-album">
+        </div>
+      
+        <div class="grid-item-album" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          <img src="" id="image-3" alt="imagem-album" class="item-image-album">
+        </div>
+      
+        <div class="grid-item-album" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          <img src="" id="image-4" alt="imagem-album" class="item-image-album">
+        </div>
+      </div>
+
+      <div id="album-map">
+
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <!-- Slider Modal -->
+            <div id="carouselExampleDark" class="carousel carousel-dark slide">
+              <div class="carousel-inner">
+                
+                <div class="carousel-item active" data-bs-interval="10000">
+                  <img src="/assets/Mineirão/Mineirao (1).jfif" height='500px' class="d-block w-100" alt="...">
+                </div>
+
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+          </div>
+          <!-- Slider Modal -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="exampleModal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+      integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+      crossorigin="anonymous"></script>
+      <script>
+        window.addEventListener('load', async () => {
+
+          const params = new URLSearchParams(window.location.search)
+          const AlbumIdParam = params.get('albumId')
+          await fetch('https://jsonserver-album-de-fotos-leomendesrch--leonardomende30.repl.co/albuns')
+          .then(response => response.json())
+          .then(data => {
+            const AlbumObj = data.find((album) => {
+              if(album.id == AlbumIdParam){
+                return album
+              }
+            })
+
+            mapboxgl.accessToken = 'pk.eyJ1IjoibGVvbWVuZGVzMTIzIiwiYSI6ImNscG14aDl5MjBiZjkya3I0N2hldnM1Y3gifQ.sGtLiYr0o8UjRwpJGqd5Gw';
+            const AlbumMap = new mapboxgl.Map({
+              container: 'album-map',
+              style: 'mapbox://styles/mapbox/streets-v12',
+              center: AlbumObj.localizacao.reverse(),
+              zoom: 11
+            });
+            
+            document.querySelector(".album-title").innerHTML = AlbumObj.nome
+            document.querySelector(".album-description").innerHTML = AlbumObj.descricao
+            document.querySelector(".album-localization").innerHTML = AlbumObj.cidade
+            document.querySelector(".album-data").innerHTML = AlbumObj.data
+            document.querySelector(".album-image").src = AlbumObj.capa
+
+            let cont = 1
+            AlbumObj.fotos.map((foto) => {
+              const tagImage = document.querySelector(`#image-${cont}`)
+              tagImage.src = foto.url
+              cont++
+            })
+
+            let popup = new mapboxgl.Popup({ offset: 25 }).setHTML(`<h4>${AlbumObj.nome}</h4><br>${AlbumObj.descricao}`);
+            const marker = new mapboxgl.Marker({ color: "yellow" })
+            .setLngLat(album.localizacao.reverse())
+            .setPopup(popup)
+            .addTo(AlbumMap)
+          })
+        })
+      </script>
+  </body>
+
+  </html>

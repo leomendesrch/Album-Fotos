@@ -1,0 +1,160 @@
+.corpo{
+  padding: 0 50px;
+}
+.nav-bar{
+  display: flex;
+  align-items: center;
+}
+.grid-container{
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 350px);
+  column-gap: 150px;
+  row-gap: 50px;
+  justify-content: center;
+  padding: 25px 0;
+
+}
+
+.album-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 25px;
+  gap: 50px;
+}
+
+.grid-container-album {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 700px);
+  justify-content: center;
+  column-gap: 20px;
+  row-gap: 20px;
+  padding: 15px 0;
+}
+
+#map{
+  width: 100%;
+  height: 45vh;
+}
+
+#album-map{
+  width: 100%;
+  height: 45vh;
+}
+
+.grid-item-album {
+  height: 300px;
+  width: 700px;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.grid-item {
+  height: 400px;
+  width: 350px;
+  border: 1px solid #D3D3D3;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.item-image{
+  width: 100%;
+  height: 200px;
+  border-radius: 12px 12px 0 0;
+}
+
+.item-image-album {
+  width: 100%;
+  height: 300px;
+  border-radius: 12px;
+}
+
+.card-info{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 15px;
+  text-align: center;
+  padding: 20px;
+}
+
+a {
+  text-decoration: none;
+  width: auto;
+  height: auto;
+  color: black;
+}
+
+.album-info{
+  width: 100%;
+}
+
+.album-content{
+  display: flex;
+  padding: 10px 10px 30px 10px;
+}
+
+.album-image{
+  height: 250px;
+  margin-right: 50px;
+}
+
+.album-description{
+  max-width: 75%;
+}
+
+.localization-and-data{
+  display: flex;
+  width: 100%;
+  gap: 200px;
+}
+
+.credits-container{
+  display: flex;
+  padding: 0 20px;
+  justify-content: space-between;
+}
+
+.sobre{
+  width: 100%;
+  max-width: 70%;
+}
+
+
+@media (max-width: 1200px) {
+  .album-content {
+    display: block;
+  }
+
+  .corpo {
+    padding: 0 25px;
+  }
+}
+
+@media (max-width: 900px) {
+
+  .nav-bar {
+    display: none;
+  }
+
+  .album-image{
+    width: 100%;
+  }
+  .album-info{
+    margin-top: 20px;
+  }
+  .localization-and-data{
+    gap: 50px;
+  }
+  .carousel-container {
+    display: none;
+  }
+
+  .carousel-title {
+    display: none;
+  }
+}

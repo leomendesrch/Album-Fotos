@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css' rel='stylesheet' />
+  <title>Album de fotos - Leonardo</title>
+</head>
+
+<body class="corpo">
+  <header class="d-flex justify-content-between py-4 w-100">
+    <a href="index.html"><img src="/assets/logo.png" role="button" ></a>
+    <nav class="nav-bar">
+      <ul class="d-flex list-unstyled fs-3 gap-0 column-gap-4 m-0">
+        <li><a role="button" href="/index.html">Albuns de fotos</a></li>
+        <li><a role="button" href="https://leomendesrch-portfolio.vercel.app/">Sobre nós</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="carousel-title pb-3">
+    <h4 class="border-bottom border-3 pb-2">Destaque</h4>
+  </div>
+
+  <!-- Inico Slide Carrosel -->
+  <div class="carousel-container">
+    <div id="carouselExample" class="carousel slide">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+          aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      </div>
+      <div class="carousel-inner">
+     
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+  <!-- Fim Slide Carrosel -->
+  
+  <div class="pb-3 h-25 pt-4">
+    <h4 class="border-bottom border-3 pb-2">Mapa</h4>
+  </div>
+
+  <!-- MapaBox -->
+    <div id="map"></div>
+  <!-- MapBox -->
+
+
+  <!-- Album de fotos -->
+  <div class="pb-3 h-25 pt-4" >
+    <h4 class="border-bottom border-3 pb-2">Lista de Álbuns</h4>
+  </div>
+
+
+  <div class="grid-container">
+
+  </div>
+  <!-- Fim Album de foto-->
+
+    <div class="pb-3 h-25 pt-4">
+      <h4 class="border-bottom border-3 pb-2">Créditos</h4>
+    </div>
+
+    <div class="credits-container">
+      <div class="sobre">
+        <h5>Sobre</h5>
+        <p>Sou um dev React 👋. Estou estudando constantemente em busca de novas oportunidades e projetos para aprimora minhas
+        habilidades e colocar em prática todo o meu conhecimento, que com certeza vai agregar valor a empresas e sua equipe de
+        programadores.
+        minha ambição é crescer e atuar na área!
+        Curso Análise e Desenvolvimento de Sistemas pela PUC Minas.</p>
+      </div>
+      <div>
+        <h5>Autoria</h5>
+        <p>Aluno: Leonardo Mendes Rocha</p>
+        <p>Curso: Analise e desenvolvimento de sistemas</p>
+        <p>Turno: Manhã</p> 
+      </div>
+    </div>
+
+<!-- Importação JS do bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+  integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+  integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+<script>
+  mapboxgl.accessToken = 'pk.eyJ1IjoibGVvbWVuZGVzMTIzIiwiYSI6ImNscG14aDl5MjBiZjkya3I0N2hldnM1Y3gifQ.sGtLiYr0o8UjRwpJGqd5Gw';
+  let cntr = ["-19.859436903783603", "-43.91853253009936"];
+
+  const maps = new mapboxgl.Map({
+    container: 'map', 
+    style: 'mapbox://styles/mapbox/streets-v12', 
+    center: [-43.91853253009936, -19.859436903783603], 
+    zoom: 1
+  });
+ let AlbunsArray;
+ fetch('https://jsonserver-album-de-fotos-leomendesrch--leonardomende30.repl.co/albuns')
+ .then(response => response.json())
+ .then(data => {
+
+    fetch('https://jsonserver-album-de-fotos-leomendesrch--leonardomende30.repl.co/destaques').then(response => response.json())
+      .then(destaques => {
+        destaques.map((destaque, index) => {
+          const CarrouselItem = document.createElement('div')
+          CarrouselItem.className = `carousel-item ${index == 0? "active" : ""}`
+          const ItemImage = document.createElement('img')
+          ItemImage.style.height = '500px'
+          ItemImage.className = "carousel-image d-block w-100"
+          ItemImage.src = data[destaque.albumId - 1].capa
+
+          const ItemInfo = document.createElement('div')
+          ItemInfo.className = 'carousel-caption d-none d-md-block'
+
+          const ItemTitle = document.createElement('h5')
+          ItemTitle.innerHTML = data[destaque.albumId - 1].nome
+          const ItemText = document.createElement('p')
+          ItemText.innerHTML = data[destaque.albumId - 1].descricao
+
+          ItemInfo.appendChild(ItemTitle)
+          ItemInfo.appendChild(ItemText)
+
+          CarrouselItem.appendChild(ItemImage)
+          CarrouselItem.appendChild(ItemInfo)
+          console.log(document.querySelector('.grid-container'))
+          document.querySelector('.carousel-inner').appendChild(CarrouselItem)
+        })
+    })
+
+    data.map((album) => {
+      const Ancor = document.createElement('a');
+      Ancor.href = `AlbumPage.html?albumId=${album.id}`
+
+      const GridItem = document.createElement('div');
+      GridItem.className = 'grid-item'
+
+      const Image = document.createElement('img');
+      Image.src = album.capa
+      Image.className = "item-image"
+
+      const CardInfo = document.createElement('div');
+      CardInfo.className = "card-info"
+
+      const ItemName = document.createElement('h5');
+      ItemName.innerHTML = album.nome
+
+      const ItemDescription = document.createElement('p');
+      ItemDescription.innerHTML = album.descricao
+
+      CardInfo.appendChild(ItemName)
+      CardInfo.appendChild(ItemDescription)
+
+      GridItem.appendChild(Image)
+      GridItem.appendChild(CardInfo)
+
+      Ancor.appendChild(GridItem);
+
+      document.querySelector(".grid-container").appendChild(Ancor)
+    })
+
+    
+    
+    const colorsArray = ["blue", "red", "green", "purple"]
+    data.forEach((album) => {
+      let popup = new mapboxgl.Popup({ offset: 25 })
+        .setHTML(`<h4><a href="" target="_blank">${album.nome}</a></h4><br>
+        ${album.descricao}<br>`);
+      const marker = new mapboxgl.Marker({ color: colorsArray[Math.floor(Math.random() * (colorsArray.length - 1))]})
+        .setLngLat(album.localizacao.reverse())
+        .setPopup(popup)
+        .addTo(maps);
+    }) 
+
+    function processarGeo(local) {
+      let popup = new mapboxgl.Popup({ offset: 25 })
+        .setHTML(`<h4>Sua localização!</h4>`);
+      const marker = new mapboxgl.Marker({ color: 'yellow' })
+        .setLngLat([local.coords.longitude, local.coords.latitude])
+        .setPopup(popup)
+        .addTo(maps);
+    }
+
+    navigator.geolocation.getCurrentPosition(processarGeo, () => { alert('Favor, permitir a localização na página!') })
+
+  })
+ 
+
+</script>
+</body>
+
+</html>
