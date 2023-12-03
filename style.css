@@ -129,6 +129,14 @@ a {
   .album-content {
     display: block;
   }
+    .grid-container-album {
+      grid-template-columns: repeat(auto-fill, 400px);
+
+    }
+  
+    .grid-item-album {
+      width: 400px;
+    }
 
   .corpo {
     padding: 0 25px;
