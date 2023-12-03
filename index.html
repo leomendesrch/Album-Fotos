@@ -172,11 +172,10 @@
     })
 
     
-    
     const colorsArray = ["blue", "red", "green", "purple"]
     data.forEach((album) => {
       let popup = new mapboxgl.Popup({ offset: 25 })
-        .setHTML(`<h4><a href="" target="_blank">${album.nome}</a></h4><br>
+        .setHTML(`<h4><a href=AlbumPage.html?albumId=${album.id} target="_blank">${album.nome}</a></h4><br>
         ${album.descricao}<br>`);
       const marker = new mapboxgl.Marker({ color: colorsArray[Math.floor(Math.random() * (colorsArray.length - 1))]})
         .setLngLat(album.localizacao.reverse())
